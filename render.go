@@ -572,6 +572,26 @@ func (g *game) drawPillows(c *canvas) {
 	}
 }
 
+// Шапочка: ночной колпак с помпоном на макушке спящего котика.
+func (g *game) drawHat(c *canvas, x int) {
+	rt := g.roadTop()
+	c.put(x+2, rt-7, '▖', 218, 237)
+	for i := 3; i <= 6; i++ {
+		c.put(x+i, rt-7, '▄', 218, 237)
+	}
+	c.put(x+7, rt-7, '▗', 218, 237)
+	for i := 4; i <= 6; i++ {
+		c.put(x+i, rt-8, '▄', 218, 237)
+	}
+	c.put(x+5, rt-9, 'o', 255, 237)
+}
+
+// Сосочка: пустышка в пасти спящего котика.
+func (g *game) drawPacifier(c *canvas, x int) {
+	rt := g.roadTop()
+	c.put(x+4, rt-5, 'o', 218, 237)
+}
+
 // Подгузник: белая накладка с голубой окантовкой на нижней части котика.
 func (g *game) drawDiaper(c *canvas, x int) {
 	rt := g.roadTop()
@@ -614,8 +634,8 @@ func (g *game) drawZzz(c *canvas) {
 	for _, cat := range []float64{g.catX, g.cat2X} {
 		x := int(math.Round(cat))
 		for i := 0; i < 2; i++ {
-			zx := x + 6 + i + int(math.Round(math.Sin(g.t*1.8+float64(i))*1))
-			zy := rt - 7 - i*2 - int(g.t*2)%2
+			zx := x + 8 + i + int(math.Round(math.Sin(g.t*1.8+float64(i))*1))
+			zy := rt - 8 - i*2 - int(g.t*2)%2
 			c.inkText(zx, zy, "z", 246, true)
 		}
 	}
@@ -633,8 +653,12 @@ func (g *game) drawFinale(c *canvas) {
 		g.drawBottles(c)
 		if g.asleep {
 			g.drawSleepingCat(c, int(math.Round(g.cat2X)), rt-3, grayCat)
+			g.drawHat(c, int(math.Round(g.cat2X)))
+			g.drawPacifier(c, int(math.Round(g.cat2X)))
 			g.drawDiaper(c, int(math.Round(g.cat2X)))
 			g.drawSleepingCat(c, int(math.Round(g.catX)), rt-3, orangeCat)
+			g.drawHat(c, int(math.Round(g.catX)))
+			g.drawPacifier(c, int(math.Round(g.catX)))
 			g.drawDiaper(c, int(math.Round(g.catX)))
 			g.drawZzz(c)
 		} else {
