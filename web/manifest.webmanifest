@@ -1,0 +1,15 @@
+{
+  "name": "Котик-бегун",
+  "short_name": "Котик",
+  "description": "Мини-игра: котик бежит по ночной дороге, прыгает через лужи и в финале засыпает на подушке",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#05051e",
+  "theme_color": "#0a0a3c",
+  "icons": [
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
