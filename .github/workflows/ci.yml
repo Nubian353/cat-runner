@@ -1,0 +1,54 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+          cache: true
+      - name: gofmt
+        run: |
+          unformatted="$(gofmt -l .)"
+          if [ -n "$unformatted" ]; then
+            echo "Не отформатировано:"
+            echo "$unformatted"
+            exit 1
+          fi
+      - name: vet
+        run: go vet ./...
+      - name: test
+        run: go test -race -count=1 ./...
+      - name: build
+        run: go build -trimpath -o /tmp/cat-runner .
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: syntax
+        run: |
+          node --check web/game.js
+          node --check web/sw.js
+      - name: manifest
+        run: node -e "const m=JSON.parse(require('fs').readFileSync('web/manifest.webmanifest','utf8')); if(!m.icons||!m.start_url) throw new Error('manifest'); console.log('manifest ok:', m.name)"
+      - name: files
+        run: |
+          for f in web/index.html web/game.js web/style.css web/manifest.webmanifest web/sw.js web/icon-180.png web/icon-512.png; do
+            test -f "$f" || { echo "нет файла $f"; exit 1; }
+          done
+          echo "все файлы на месте"

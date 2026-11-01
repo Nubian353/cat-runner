@@ -1,5 +1,8 @@
 # Котик-бегун 🐾
 
+[![ci](https://github.com/Nubian353/cat-runner/actions/workflows/ci.yml/badge.svg)](https://github.com/Nubian353/cat-runner/actions/workflows/ci.yml)
+[![pages](https://github.com/Nubian353/cat-runner/actions/workflows/pages.yml/badge.svg)](https://github.com/Nubian353/cat-runner/actions/workflows/pages.yml)
+
 Мини-игра для терминала на Go: котик бежит по ночной дороге через **два этапа**,
 прыгает через лужи и в финале получает сосиску. Три жизни, растущая скорость и
 рекорд, который сохраняется между запусками.
