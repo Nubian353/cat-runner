@@ -572,6 +572,22 @@ func (g *game) drawPillows(c *canvas) {
 	}
 }
 
+// Подгузник: белая накладка с голубой окантовкой на нижней части котика.
+func (g *game) drawDiaper(c *canvas, x int) {
+	rt := g.roadTop()
+	top := rt - 4
+	c.put(x+2, top, '▖', 195, 237)
+	c.put(x+3, top, '▄', 255, 237)
+	c.put(x+4, top, '▄', 255, 237)
+	c.put(x+5, top, '▄', 255, 237)
+	c.put(x+6, top, '▗', 195, 237)
+	c.put(x+2, top+1, '▐', 195, 237)
+	c.put(x+3, top+1, '█', 255, 237)
+	c.put(x+4, top+1, '▓', 195, 237)
+	c.put(x+5, top+1, '█', 255, 237)
+	c.put(x+6, top+1, '▌', 195, 237)
+}
+
 // Бутылочка молока у подушки: голубая крышка, белое молоко, тень.
 func (g *game) drawBottle(c *canvas, x int) {
 	rt := g.roadTop()
@@ -617,7 +633,9 @@ func (g *game) drawFinale(c *canvas) {
 		g.drawBottles(c)
 		if g.asleep {
 			g.drawSleepingCat(c, int(math.Round(g.cat2X)), rt-3, grayCat)
+			g.drawDiaper(c, int(math.Round(g.cat2X)))
 			g.drawSleepingCat(c, int(math.Round(g.catX)), rt-3, orangeCat)
+			g.drawDiaper(c, int(math.Round(g.catX)))
 			g.drawZzz(c)
 		} else {
 			g.drawCatShadow(c, g.cat2X)
