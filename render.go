@@ -572,6 +572,27 @@ func (g *game) drawPillows(c *canvas) {
 	}
 }
 
+// Бутылочка молока у подушки: голубая крышка, белое молоко, тень.
+func (g *game) drawBottle(c *canvas, x int) {
+	rt := g.roadTop()
+	c.put(x+1, rt-4, '▄', 195, 237)
+	c.put(x+1, rt-3, '█', 255, 237)
+	for _, y := range []int{rt - 2, rt - 1} {
+		c.put(x, y, '▐', 181, 237)
+		c.put(x+1, y, '█', 255, 237)
+		c.put(x+2, y, '▌', 181, 237)
+	}
+	c.put(x, rt, '▀', 181, 237)
+	c.put(x+1, rt, '▀', 181, 237)
+	c.put(x+2, rt, '▀', 181, 237)
+}
+
+func (g *game) drawBottles(c *canvas) {
+	x := int(math.Round(g.pillowX))
+	g.drawBottle(c, x-4)
+	g.drawBottle(c, x+pillowW*2+pillowGap+1)
+}
+
 func (g *game) drawZzz(c *canvas) {
 	rt := g.roadTop()
 	for _, cat := range []float64{g.catX, g.cat2X} {
@@ -593,6 +614,7 @@ func (g *game) drawFinale(c *canvas) {
 	rt := g.roadTop()
 	if g.pillowShown {
 		g.drawPillows(c)
+		g.drawBottles(c)
 		if g.asleep {
 			g.drawSleepingCat(c, int(math.Round(g.cat2X)), rt-3, grayCat)
 			g.drawSleepingCat(c, int(math.Round(g.catX)), rt-3, orangeCat)

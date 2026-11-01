@@ -680,7 +680,7 @@ func (g *game) updateFinish(dt float64) {
 		g.pillowShown = true
 		g.asleep = false
 		g.sleepFor = 0
-		g.pillowX = clampF((g.catX+g.cat2X)/2-13, 4, float64(g.w)-26)
+		g.pillowX = clampF((g.catX+g.cat2X)/2-13, 5, float64(g.w)-30)
 		g.floats = append(g.floats, floatText{
 			x:       g.pillowX + 14,
 			y:       float64(rt - 7),
